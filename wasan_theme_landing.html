@@ -1,0 +1,431 @@
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', Tahoma, sans-serif; direction: rtl;}
+
+  .wasan { background: #0a0a0a; color: #fff; font-family: 'Segoe UI', sans-serif; direction: rtl; }
+
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 4rem 2rem;
+    position: relative; overflow: hidden;
+  }
+  
+  .hero-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.4);
+    text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+  .hero-title {
+    font-size: clamp(4rem, 12vw, 9rem);
+    font-weight: 900; line-height: 0.9;
+    letter-spacing: -0.02em; margin-bottom: 2rem;
+  }
+  .hero-subtitle {
+    font-size: 1.05rem; color: rgba(255,255,255,0.5);
+    max-width: 480px; line-height: 1.8; margin-bottom: 3rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    padding: 0.85rem 2.2rem; background: #fff; color: #000;
+    border: none; border-radius: 4px; font-size: 0.88rem;
+    font-weight: 600; cursor: pointer; transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary {
+    padding: 0.85rem 2.2rem; background: transparent; color: #fff;
+    border: 1px solid rgba(255,255,255,0.25); border-radius: 4px;
+    font-size: 0.88rem; cursor: pointer; transition: border-color 0.2s;
+  }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.6); }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: flex; justify-content: center; gap: 0;
+    border-top: 0.5px solid rgba(255,255,255,0.08);
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    padding: 2rem 0;
+  }
+  .stat-item {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0 3rem;
+    border-left: 0.5px solid rgba(255,255,255,0.08);
+  }
+  .stat-item:last-child { border-left: none; }
+  .stat-num { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em; }
+  .stat-lbl { font-size: 0.75rem; color: rgba(255,255,255,0.4); letter-spacing: 0.06em; margin-top: 0.3rem; }
+
+  /* SECTION */
+  .section { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; }
+  .section-eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; color: rgba(255,255,255,0.35); text-transform: uppercase; margin-bottom: 1rem; }
+  .section-title { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; }
+  .section-desc { font-size: 1rem; color: rgba(255,255,255,0.5); max-width: 520px; line-height: 1.8; margin-bottom: 3rem; }
+
+  /* COMPONENTS GRID */
+  .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1px; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.06); }
+  .comp-card {
+    background: #0a0a0a; padding: 2.5rem;
+    transition: background 0.3s;
+    cursor: default;
+  }
+  .comp-card:hover { background: #111; }
+  .comp-num { font-size: 0.72rem; color: rgba(255,255,255,0.2); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+  .comp-preview {
+    width: 100%; aspect-ratio: 16/9;
+    border-radius: 6px; overflow: hidden; margin-bottom: 1.5rem;
+    background: #161616; border: 0.5px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .comp-preview img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .comp-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .comp-desc { font-size: 0.85rem; color: rgba(255,255,255,0.45); line-height: 1.7; }
+  .comp-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+  .tag {
+    font-size: 0.7rem; padding: 0.25rem 0.7rem;
+    border: 0.5px solid rgba(255,255,255,0.12);
+    border-radius: 2px; color: rgba(255,255,255,0.4); letter-spacing: 0.05em;
+  }
+
+  /* FEATURE ROW */
+  .feature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; padding: 5rem 3rem; max-width: 1200px; margin: 0 auto; }
+  .feature-row.reverse { direction: ltr; }
+  .feature-row.reverse .feature-text { direction: rtl; }
+  .feature-icon { font-size: 2.5rem; margin-bottom: 1.5rem; }
+  .feature-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
+  .feature-body { font-size: 0.95rem; color: rgba(255,255,255,0.5); line-height: 1.8; }
+  .feature-visual {
+    aspect-ratio: 4/3; background: #111;
+    border: 0.5px solid rgba(255,255,255,0.08); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .feature-visual img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+  /* MARQUEE */
+  .marquee-wrap { padding: 3rem 0; overflow: hidden; border-top: 0.5px solid rgba(255,255,255,0.06); border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+  .marquee-track { display: flex; gap: 3rem; width: max-content; animation: marquee 20s linear infinite; }
+  .marquee-item { font-size: 1.1rem; font-weight: 700; color: rgba(255,255,255,0.15); white-space: nowrap; letter-spacing: 0.05em; }
+  .marquee-item span { color: rgba(255,255,255,0.4); margin: 0 1rem; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* CTA SECTION */
+  .cta-section {
+    padding: 8rem 3rem; text-align: center;
+    border-top: 0.5px solid rgba(255,255,255,0.06);
+  }
+  .cta-title { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; }
+  .cta-sub { font-size: 1rem; color: rgba(255,255,255,0.45); margin-bottom: 3rem; }
+
+  /* FOOTER */
+  .footer {
+    padding: 2rem 3rem;
+    border-top: 0.5px solid rgba(255,255,255,0.06);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo { font-size: 1.1rem; font-weight: 700; }
+  .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.25); }
+
+  @media (max-width: 768px) {
+    .nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .section { padding: 4rem 1.5rem; }
+    .feature-row { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem; }
+    .stat-item { padding: 0 1.5rem; }
+    .footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+
+<div class="wasan">
+
+
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Twilight Theme — سلة · 2026</p>
+    <h1 class="hero-title">وسن</h1>
+    <p class="hero-subtitle">ثيم راقٍ مصمم لمتاجر سلة — حيث تلتقي الأناقة بالأداء. كل مكوّن صُنع بعناية لتقديم تجربة تسوق لا تُنسى.</p>
+    <div class="hero-actions">
+      <a href="#components">
+        <button class="btn-primary">استعرض المكونات</button>
+      </a>
+      
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num">11+</span>
+      <span class="stat-lbl">مكوّن جاهز</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">100%</span>
+      <span class="stat-lbl">مخصص لسلة</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">RTL</span>
+      <span class="stat-lbl">دعم كامل للعربية</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">Zero</span>
+      <span class="stat-lbl">اعتماد على مكتبات</span>
+    </div>
+  </div>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Hero Slider <span>✦</span></span>
+      <span class="marquee-item">Product Showcase <span>✦</span></span>
+      <span class="marquee-item">Countdown Timer <span>✦</span></span>
+      <span class="marquee-item">Our Story <span>✦</span></span>
+      <span class="marquee-item">Testimonials <span>✦</span></span>
+      <span class="marquee-item">Before & After <span>✦</span></span>
+      <span class="marquee-item">Stats Counter <span>✦</span></span>
+      <span class="marquee-item">Partners Ticker <span>✦</span></span>
+      <span class="marquee-item">Hero Slider <span>✦</span></span>
+      <span class="marquee-item">Product Showcase <span>✦</span></span>
+      <span class="marquee-item">Countdown Timer <span>✦</span></span>
+      <span class="marquee-item">Our Story <span>✦</span></span>
+      <span class="marquee-item">Testimonials <span>✦</span></span>
+      <span class="marquee-item">Before & After <span>✦</span></span>
+      <span class="marquee-item">Stats Counter <span>✦</span></span>
+      <span class="marquee-item">Partners Ticker <span>✦</span></span>
+    </div>
+  </div>
+
+  <!-- COMPONENTS SECTION -->
+  <div id="components" class="section">
+    <p class="section-eyebrow">المكونات</p>
+    <h2 class="section-title">كل ما يحتاجه متجرك</h2>
+    <p class="section-desc">١١ مكوناً مصمماً بأعلى معايير تجربة المستخدم — كل واحد يحل مشكلة حقيقية ويرفع معدل التحويل.</p>
+  </div>
+
+  <div class="comp-grid" style="max-width:1200px; margin: 0 auto 0; border-right: 0.5px solid rgba(255,255,255,0.06); border-left: 0.5px solid rgba(255,255,255,0.06);">
+
+    <div class="comp-card">
+      <div class="comp-num">01</div>
+      <div class="comp-preview" style="background: #0d0d0d;">
+        <img src="/images/1.png" alt="Hero"/>
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:flex-end;padding:1rem;">
+        </div>
+      </div>
+      <div class="comp-name">Hero Slider — الواجهة الرئيسية</div>
+      <div class="comp-desc">واجهة بطولية سينمائية بخلفية فيديو أو صورة، مع نص متحرك وزر CTA واضح. أول ما يراه العميل — صُمّم ليبهره.</div>
+      <div class="comp-tags">
+        <span class="tag">VIDEO BG</span>
+        <span class="tag">ANIMATED TEXT</span>
+        <span class="tag">FULL SCREEN</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-num">02</div>
+      <div class="comp-preview">
+        <img src="/images/10.png" alt="Product"/>
+        <div style="position:absolute;top:0.8rem;left:0.8rem;background:#fff;color:#000;font-size:0.7rem;font-weight:700;padding:0.3rem 0.7rem;border-radius:3px;">جديد</div>
+      </div>
+      <div class="comp-name">Product Showcase — عرض المنتج</div>
+      <div class="comp-desc">عرض تفصيلي للمنتج المميز مع سعر قديم وجديد، ونقاط البيع، والباج. يحوّل الزائر إلى مشترٍ في ثوانٍ.</div>
+      <div class="comp-tags">
+        <span class="tag">PRICE TAG</span>
+        <span class="tag">BULLET POINTS</span>
+        <span class="tag">BADGE</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-num">03</div>
+      <div class="comp-preview" style="background:#0d0d0d; flex-direction: column; gap: 0.5rem;">
+        <div style="font-size:0.7rem;color:rgba(255,255,255,0.3);letter-spacing:0.1em;">عرض محدود</div>
+        <div style="font-size:1.5rem;font-weight:900;">عرض 24 ساعة</div>
+        <div style="display:flex;gap:1rem;font-size:1.8rem;font-weight:900;font-variant-numeric:tabular-nums;">
+          <span>03</span><span style="color:rgba(255,255,255,0.3)">:</span>
+          <span>23</span><span style="color:rgba(255,255,255,0.3)">:</span>
+          <span>47</span>
+        </div>
+        <div style="display:flex;gap:1rem;font-size:0.65rem;color:rgba(255,255,255,0.3);letter-spacing:0.08em;">
+          <span>ساعة</span><span style="opacity:0">&nbsp;&nbsp;</span><span>دقيقة</span><span style="opacity:0">&nbsp;&nbsp;</span><span>ثانية</span>
+        </div>
+      </div>
+      <div class="comp-name">Countdown Timer — العد التنازلي</div>
+      <div class="comp-desc">عداد تنازلي حي يخلق إلحاحية حقيقية. مثبت على مدار الساعة ويتوقف تلقائياً عند انتهاء العرض.</div>
+      <div class="comp-tags">
+        <span class="tag">LIVE CLOCK</span>
+        <span class="tag">URGENCY</span>
+        <span class="tag">AUTO STOP</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-num">04</div>
+      <div class="comp-preview">
+        <img src="/images/9.png" alt="Collections" style="filter:brightness(0.7)"/>
+        <div style="position:absolute;top:1rem;right:1rem;font-size:0.65rem;letter-spacing:0.15em;color:rgba(255,255,255,0.5)">LATEST PRODUCTS</div>
+        <div style="position:absolute;bottom:1rem;left:1rem;font-size:1.3rem;font-weight:900;">تشكيلاتنا</div>
+      </div>
+      <div class="comp-name">Collections Grid — التشكيلات</div>
+      <div class="comp-desc">شبكة منتجات بتصميم editorial فاخر، كل منتج يملأ الإطار بصرياً. مثالي لمتاجر الأزياء والفاشن.</div>
+      <div class="comp-tags">
+        <span class="tag">EDITORIAL</span>
+        <span class="tag">FULL BLEED</span>
+        <span class="tag">HOVER EFFECTS</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-num">05</div>
+      <div class="comp-preview">
+        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=60" alt="Story" style="filter:brightness(0.5); width:50%; height:100%; object-fit:cover; object-position:center;"/>
+        <div style="flex:1; padding: 1.5rem; display:flex; flex-direction:column; justify-content:center; gap:0.5rem;">
+          <div style="font-size:0.6rem;letter-spacing:0.15em;color:rgba(255,255,255,0.3)">OUR STORY</div>
+          <div style="font-size:1.4rem;font-weight:900;">قصتنا</div>
+          <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);line-height:1.6;">نص تعريفي عن المتجر وقيمه ورسالته للعالم.</div>
+          <div style="display:flex;gap:1.5rem;margin-top:0.5rem;">
+            <div style="text-align:center"><div style="font-size:1rem;font-weight:800;">5000+</div><div style="font-size:0.6rem;color:rgba(255,255,255,0.3)">عميل</div></div>
+            <div style="text-align:center"><div style="font-size:1rem;font-weight:800;">8+</div><div style="font-size:0.6rem;color:rgba(255,255,255,0.3)">سنوات</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="comp-name">Our Story — قصتنا</div>
+      <div class="comp-desc">صفحة تعريفية بتصميم split-screen تجمع الصورة مع النص والأرقام. تبني ثقة العميل وتعزز هوية العلامة.</div>
+      <div class="comp-tags">
+        <span class="tag">SPLIT SCREEN</span>
+        <span class="tag">STATS</span>
+        <span class="tag">BRAND STORY</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-num">06</div>
+      <div class="comp-preview" style="background:#0d0d0d; flex-wrap:wrap; align-content:center; gap:0.5rem; padding:1rem;">
+        <div style="background:#141414;border:0.5px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.8rem;flex:1;min-width:130px;">
+          <div style="font-size:0.9rem;color:rgba(255,255,255,0.3);margin-bottom:0.5rem;">❝</div>
+          <div style="font-size:0.65rem;color:rgba(255,255,255,0.5);line-height:1.5;margin-bottom:0.8rem;">منتج رائع وتوصيل سريع جداً</div>
+          <div style="display:flex;align-items:center;gap:0.4rem;">
+            <div style="width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:0.6rem;">س</div>
+            <div><div style="font-size:0.65rem;font-weight:600;">سارة</div><div style="font-size:0.55rem;color:rgba(255,255,255,0.3)">VERIFIED</div></div>
+          </div>
+        </div>
+        <div style="background:#141414;border:0.5px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.8rem;flex:1;min-width:130px;">
+          <div style="font-size:0.9rem;color:rgba(255,255,255,0.3);margin-bottom:0.5rem;">❝</div>
+          <div style="font-size:0.65rem;color:rgba(255,255,255,0.5);line-height:1.5;margin-bottom:0.8rem;">تجربة شراء ممتعة ومريحة</div>
+          <div style="display:flex;align-items:center;gap:0.4rem;">
+            <div style="width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:0.6rem;">أ</div>
+            <div><div style="font-size:0.65rem;font-weight:600;">أحمد</div><div style="font-size:0.55rem;color:rgba(255,255,255,0.3)">VERIFIED</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="comp-name">Testimonials — آراء العملاء</div>
+      <div class="comp-desc">شبكة تقييمات بتصميم masonry فاخر. كل بطاقة تعرض التقييم والمنتج والعميل الموثق — أقوى دليل اجتماعي.</div>
+      <div class="comp-tags">
+        <span class="tag">MASONRY GRID</span>
+        <span class="tag">VERIFIED BADGE</span>
+        <span class="tag">STAR RATING</span>
+      </div>
+    </div>
+
+   
+    <div class="comp-card">
+      <div class="comp-num">07</div>
+      <div class="comp-preview">
+        <img src="/images/5.png" alt="Product"/>
+        <div style="position:absolute;top:0.8rem;left:0.8rem;background:#fff;color:#000;font-size:0.7rem;font-weight:700;padding:0.3rem 0.7rem;border-radius:3px;">جديد</div>
+      </div>
+      <div class="comp-name">Before & After — قبل وبعد</div>
+      <div class="comp-desc">مقارنة تفاعلية بسحب يدوي تُظهر الفرق الحقيقي لمنتجك. مثالي لمستحضرات التجميل والعناية والتحولات البصرية.</div>
+      <div class="comp-tags">
+       <span class="tag">DRAG HANDLE</span>
+        <span class="tag">INTERACTIVE</span>
+        <span class="tag">COMPARISON</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-num">08</div>
+      <div class="comp-preview">
+        <img src="/images/4.png" alt="Product"/>
+      </div>
+      <div class="comp-name">Stats Counter — الإحصائيات</div>
+      <div class="comp-desc">أرقام تتصاعد تلقائياً عند الدخول للشاشة بتأثير easeOut سلس. تحوّل إنجازاتك لقصة مقنعة بالأرقام.</div>
+      <div class="comp-tags">
+        <span class="tag">COUNT UP</span>
+        <span class="tag">ON SCROLL</span>
+        <span class="tag">EASEING</span>
+      </div>
+    </div>
+
+
+
+    <div class="comp-card">
+      <div class="comp-num">10</div>
+      <div class="comp-preview">
+        <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&q=60" alt="Sale" style="filter:brightness(0.4)"/>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;">
+          <div style="font-size:0.6rem;letter-spacing:0.2em;color:rgba(255,255,255,0.4)">EXCLUSIVE EDITION</div>
+          <div style="font-size:1.8rem;font-weight:900;">خصومات</div>
+          <div style="font-size:0.75rem;color:rgba(255,255,255,0.5)">تصل إلى 50%</div>
+        </div>
+      </div>
+      <div class="comp-name">Sale Banner — بانر الخصومات</div>
+      <div class="comp-desc">بانر ترويجي بخلفية جريئة ونص مركزي يصرخ بالعرض. مثالي لـ Black Friday وتخفيضات المواسم الخاصة.</div>
+      <div class="comp-tags">
+        <span class="tag">PROMOTIONAL</span>
+        <span class="tag">BOLD LAYOUT</span>
+        <span class="tag">CTA BUTTON</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-num">11</div>
+      <div class="comp-preview" style="background:#0d0d0d; padding:1.5rem; flex-direction:column; gap:0.8rem;">
+        <div style="font-size:0.65rem;letter-spacing:0.15em;color:rgba(255,255,255,0.3)">احدث التشكيلات</div>
+        <div style="display:flex;gap:0.5rem;flex:1;">
+            <img src="/images/3.png" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.7)"/>
+          </div>
+          <div style="flex:1;background:#1a1a1a;border-radius:4px;overflow:hidden;">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&q=50" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.7)"/>
+          </div>
+          <div style="flex:1;background:#1a1a1a;border-radius:4px;overflow:hidden;">
+            <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=200&q=50" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.7)"/>
+          </div>
+      
+        <div style="display:flex;justify-content:space-between;font-size:0.6rem;color:rgba(255,255,255,0.25);">
+          <span>01 / 10</span><span>SCROLL TO EXPLORE →</span>
+        </div>
+      </div>
+      <div class="comp-name">Latest Collections — أحدث التشكيلات</div>
+      <div class="comp-desc">معرض أفقي قابل للتمرير بأسلوب editorial مجلة فاخرة. يعرض المنتجات بإطارات طويلة مع عدّاد ومؤشر تصفح.</div>
+      <div class="comp-tags">
+        <span class="tag">HORIZONTAL SCROLL</span>
+        <span class="tag">EDITORIAL</span>
+        <span class="tag">COUNTER</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2 class="cta-title">جاهز لرفع مستوى<br>متجرك؟</h2>
+    <p class="cta-sub">وسن — ليس مجرد ثيم، بل تجربة كاملة لعميلك</p>
+    <div class="hero-actions">
+      <a href="">
+              <button class="btn-primary">احصل على وسن</button>
+      </a>
+      <a target="_blank" href="https://t.me/Ahmalqurashi">
+              <button class="btn-secondary">تواصل معنا</button>
+      </a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">وسن</div>
+    <div class="footer-copy">© 2026 وسن — Twilight Theme for Salla</div>
+  </footer>
+
+</div>
